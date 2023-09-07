@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> CMS </title>
+    <style>
+        /* Reset some default browser styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center; /* Center align all content in the body */
+        }
+        
+        /* Navbar styles */
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            text-align: center; /* Center align navbar contents */
+        }
+        
+        .navbar a {
+            display: inline-block;
+            font-size: 16px;
+            color: white;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        /* Card container styles */
+        .card-container {
+            display: flex;
+            justify-content: center; /* Center align cards horizontally */
+            align-items: center; /* Center align cards vertically */
+            flex-wrap: wrap; /* Allow cards to wrap to the next line if necessary */
+        }
+        
+        /* Card styles */
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        /* Title styles */
+        .card h2 {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        /* Subtitle styles */
+        .card h3 {
+            font-size: 18px;
+            color: #666;
+        }
+        
+        /* Description styles */
+        .card p {
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <h1 style="color: azure;">CMS</h1>
+        <a href="/createBlog">Add Blog</a>
+
+    </div>
+
+    <!-- Card Section -->
+    <div class="card-container">
+        <div class="card">
+            <h2>Card 1</h2>
+            <h3>Subtitle 1</h3>
+            <p>This is a description for Card 1.</p>
+        </div>
+
+        <div class="card">
+            <h2>Card 2</h2>
+            <h3>Subtitle 2</h3>
+            <p>This is a description for Card 2.</p>
+        </div>
+
+        <div class="card">
+            <h2>Card 3</h2>
+            <h3>Subtitle 3</h3>
+            <p>This is a description for Card 3.</p>
+        </div>
+    </div>
+</body>
+</html>
