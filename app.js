@@ -1,4 +1,5 @@
 const express = require("express") //requiring express package
+const { blogs } = require("./model/index")
 const app = express()       //storing it in app, app vanne variable throughout use garinxa
 
 
@@ -26,8 +27,22 @@ app.get('/createBlog',(req,res)=>{
 })
 
 //createBlog Post
-app.post('/createBlog',(req,res)=>{
-    console.log(req.body)
+app.post('/createBlog',async(req,res)=>{
+    //first approach
+    const title = req.body.title 
+    const subTitle = req.body.subtitle 
+    const description = req.body.description 
+    //second approach
+    // const {title,subTitle,description} =req.body
+
+    //insert in database , takes some time in operation with database so use await keyword
+   await blogs.create({
+    title:title,
+    subTitle:subTitle,
+    description: description
+    })
+
+    console.log(title,subTitle,description)
     res.send('Form submitted successfully')
 })
 
