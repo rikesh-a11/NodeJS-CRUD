@@ -74,24 +74,15 @@
     </div>
 
     <!-- Card Section -->
-    <div class="card-container">
-        <div class="card">
-            <h2>Card 1</h2>
-            <h3>Subtitle 1</h3>
-            <p>This is a description for Card 1.</p>
-        </div>
-
-        <div class="card">
-            <h2>Card 2</h2>
-            <h3>Subtitle 2</h3>
-            <p>This is a description for Card 2.</p>
-        </div>
-
-        <div class="card">
-            <h2>Card 3</h2>
-            <h3>Subtitle 3</h3>
-            <p>This is a description for Card 3.</p>
-        </div>
+         <div class="card-container">
+            <% blogs.forEach((blog)=>{  %>
+            <div class="card">
+                <h2><%- blog.title %></h2>
+                <h3><%- blog.subTitle %></h3>
+                <p><%- blog.description %></p>
+            </div>    
+      <%  })  %>
+       
     </div>
 </body>
 </html>

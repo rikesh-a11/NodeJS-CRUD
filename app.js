@@ -16,9 +16,14 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 //AllBlogs
-app.get('/',(req,res)=>{
-    // console.log(req)  
-    res.render("blogs")
+app.get('/',async (req,res)=>{
+    // console.log(req) 
+    
+    //table bata data nikalnu parney
+    const allBlogs = await blogs.findAll()
+    console.log("allBlogs")
+
+    res.render("blogs",{blogs:allBlogs})
 })
 
 //createBlog
@@ -41,9 +46,7 @@ app.post('/createBlog',async(req,res)=>{
     subTitle:subTitle,
     description: description
     })
-
-    console.log(title,subTitle,description)
-    res.send('Form submitted successfully')
+    res.redirect("/")
 })
 
 
