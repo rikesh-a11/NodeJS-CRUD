@@ -1,6 +1,12 @@
 const express = require("express") //requiring express package
 const app = express()       //storing it in app, app vanne variable throughout use garinxa
 
+
+//database connection
+require("./model/index")
+
+
+
 // ejs use garna lako , kk chainey ho env set gardey
 app.set("view engine","ejs")
 
@@ -21,7 +27,7 @@ app.get('/createBlog',(req,res)=>{
 
 //createBlog Post
 app.post('/createBlog',(req,res)=>{
-    console.log(req.body.title)
+    console.log(req.body)
     res.send('Form submitted successfully')
 })
 
