@@ -11,8 +11,8 @@ require("./model/index")
 // ejs use garna lako , kk chainey ho env set gardey
 app.set("view engine","ejs")
 
-//form bata data aairaxa parse or habdle gar vaneko
-app.use(express.json())
+//form bata data aairaxa parse or handle gar vaneko
+app.use(express.json())    //remember these 2 line
 app.use(express.urlencoded({extended:true}))
 
 //AllBlogs
@@ -48,6 +48,32 @@ app.post('/createBlog',async(req,res)=>{
     })
     res.redirect("/")
 })
+
+//single blog page
+app.get("/single/:id",async (req,res)=>{
+    const id = req.params.id
+
+    //specific id ko data find garna paryo hamro table bata
+   const blog = await blogs.findAll({
+        where: {
+            id:id,
+        }
+    })
+    res.render("singleBlog.ejs",{blog:blog})
+})
+
+//delete page
+app.get("/delete/:id",async(req,res)=>{
+    const id = req.params.id
+
+    //blogs vanne table bata yo tyo id delete gar vaneko
+    await blogs.destroy({
+        where:{
+            id:id
+        }
+    })
+    res.redirect("/")
+} )
 
 
 
