@@ -75,6 +75,40 @@ app.get("/delete/:id",async(req,res)=>{
     res.redirect("/")
 } )
 
+//edit blogs
+    app.get("/edit/:id",async(req,res)=>{
+        const id = req.params.id 
+        //find blog of that id
+      const blog = await blogs.findAll({
+            where : {
+                id:id
+            }
+        })
+        res.render("editBlog.ejs",{blog : blog})
+    })
+
+
+    
+    app.post("/editBlog/:id",async(req,res)=>{
+        const id = req.params.id 
+        console.log(req.body)
+        const title = req.body.title
+        const subTitle = req.body.subtitle
+        const description = req.body.description
+
+        await blogs.update({
+            title : title,
+            subTitle: subTitle,
+            description: description
+        },{
+            where : {
+                id: id
+            }
+        })
+        res.redirect("/single/" + id)
+    })
+
+
 
 
 //port number (0-1100 for internal and 1100-6555 for services)
