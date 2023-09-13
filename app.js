@@ -6,10 +6,12 @@ const app = express()       //storing it in app, app vanne variable throughout u
 //database connection
 require("./model/index")
 
-
-
 // ejs use garna lako , kk chainey ho env set gardey
 app.set("view engine","ejs")
+
+//nodejs lai file access garna de vaneko 
+app.use(express.static("public"))
+
 
 //form bata data aairaxa parse or handle gar vaneko
 app.use(express.json())    //remember these 2 line

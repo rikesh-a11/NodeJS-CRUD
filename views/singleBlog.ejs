@@ -4,61 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Blog Post</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        h1 {
-            font-size: 36px;
-            margin: 20px 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-        }
-
-        .author-info {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 10px;
-            background-color: #333;
-        }
-
-        .author-name {
-            font-weight: bold;
-        }
-
-        .post-content {
-            line-height: 1.6;
-        }
-
-        .post-footer {
-            margin-top: 20px;
-            font-style: italic;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/singleBlog.css">
 </head>
 <body>
     <header class="nth">
@@ -66,6 +12,8 @@
         <a href="/" style="text-decoration: none; color: rgb(251, 253, 255);">Home</a>
     </header>
 
+    <!-- if we have to reuse the components then use include("components/header") -->
+ 
     <div class="container">
         <div class="author-info">
             <div class="author-name"><%- blog[0].title  %></div>
