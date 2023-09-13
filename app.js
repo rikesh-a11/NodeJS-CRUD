@@ -49,6 +49,7 @@ app.post('/createBlog',async(req,res)=>{
     res.redirect("/")
 })
 
+
 //single blog page
 app.get("/single/:id",async (req,res)=>{
     const id = req.params.id
@@ -62,6 +63,7 @@ app.get("/single/:id",async (req,res)=>{
     res.render("singleBlog.ejs",{blog:blog})
 })
 
+
 //delete page
 app.get("/delete/:id",async(req,res)=>{
     const id = req.params.id
@@ -74,6 +76,7 @@ app.get("/delete/:id",async(req,res)=>{
     })
     res.redirect("/")
 } )
+
 
 //edit blogs
     app.get("/edit/:id",async(req,res)=>{
