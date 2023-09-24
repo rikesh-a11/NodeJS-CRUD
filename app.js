@@ -5,6 +5,7 @@ const app = express()       //storing it in app, app vanne variable throughout u
 
 //ROUTES
 const blogRoute = require("./routes/blogRoute")
+const authRoute = require("./routes/authRoute")
 
  
 //database connection
@@ -23,6 +24,7 @@ app.use(express.urlencoded({extended:true}))
 
 
 app.use("",blogRoute)   //localhost:3000 /createBlog
+app.use("",authRoute)    //localhost:3000 /register
 
 
 
