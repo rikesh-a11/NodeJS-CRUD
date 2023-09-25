@@ -2,6 +2,8 @@ const express = require("express") //requiring express package
 const { blogs } = require("./model/index")
 const { CreateBlog, renderCreateBlog, allBlogs, singleBlog, deleteBlog, renderEditBlog, EditBlog } = require("./controller/blog/blogController")
 const app = express()       //storing it in app, app vanne variable throughout use garinxa
+require('dotenv').config()
+
 
 //ROUTES
 const blogRoute = require("./routes/blogRoute")

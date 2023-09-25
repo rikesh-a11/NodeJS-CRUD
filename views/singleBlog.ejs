@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Blog Post</title>
     <link rel="stylesheet" href="/css/singleBlog.css">
+    <style>
+        footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: 250px;
+}
+    </style>
 </head>
 <body>
     <header class="nth">
@@ -30,5 +39,10 @@
         <button><a href="/delete/<%-blog[0].id %>">Delete</a></button>
         <button><a href="/edit/<%-blog[0].id %>">Edit</a></button>
     </div>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2023 CMS. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
