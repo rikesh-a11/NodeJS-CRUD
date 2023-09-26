@@ -3,6 +3,7 @@ const { blogs } = require("./model/index")
 const { CreateBlog, renderCreateBlog, allBlogs, singleBlog, deleteBlog, renderEditBlog, EditBlog } = require("./controller/blog/blogController")
 const app = express()       //storing it in app, app vanne variable throughout use garinxa
 require('dotenv').config()
+const cookieparser = require("cookie-parser")
 
 
 //ROUTES
@@ -19,7 +20,7 @@ app.set("view engine","ejs")
 //nodejs lai file access garna de vaneko 
 app.use(express.static("public"))
 
-
+app.use(cookieparser())
 //form bata data aairaxa parse or handle gar vaneko
 app.use(express.json())    //remember these 2 line
 app.use(express.urlencoded({extended:true}))

@@ -6,6 +6,7 @@ exports.renderCreateBlog = (req,res)=>{
 }
 //createBlog post
 exports.CreateBlog = async(req,res)=>{
+    const userId = req.user[0].id
     //first approach
     const title = req.body.title 
     const subTitle = req.body.subtitle 
@@ -17,7 +18,9 @@ exports.CreateBlog = async(req,res)=>{
    await blogs.create({
     title:title,
     subTitle:subTitle,
-    description: description
+    description: description,
+    userId: userId
+
     })
     res.redirect("/")
 }
