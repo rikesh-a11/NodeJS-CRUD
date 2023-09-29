@@ -6,16 +6,29 @@ body {
 }
 
 /* Navbar styles */
-.navbar {
+header {
     background-color: #333;
     overflow: hidden;
     text-align: center; /* Center align navbar contents */
+    color: white;
+    padding: 10px;
 }
 
-.navbar a {
+nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+nav a {
     display: inline-block;
-    font-size: 16px;
     color: white;
     padding: 14px 16px;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+h1 a{
+    margin-bottom: 0;
     text-decoration: none;
 }

@@ -18,10 +18,12 @@
             <div class="card">
                 <h2><%- blog.title %></h2>
                 <h3><%- blog.subTitle %></h3>
-                <p><%- blog.description %></p>
+                <img src="<%- blog.image %>" alt="" height="250px" width="200px">
+                <p><%- blog.description.slice(0,100) %>...</p>
+                <p>Author : <%- blog.user.username  %></p>
                 <a href="/single/<%- blog.id %>">Read More</a>
             </div>    
-      <%  })  %>
+      <%  })  %>    
        
     </div>
 

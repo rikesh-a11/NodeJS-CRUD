@@ -12,7 +12,7 @@ exports.isAuthenticated = async(req,res,next)=>{
     }
     //if token is legit or not
     const decryptedResult = await promisify(jwt.verify)(token,process.env.SECRETKEY)
-    // console.log(decryptedResult)
+    console.log(decryptedResult)
 
     //check if that id (userId) users table ma exists xa
      const userExist = await users.findAll({
@@ -22,12 +22,12 @@ exports.isAuthenticated = async(req,res,next)=>{
     })
 
 
-    //check if length is zero or not(zero - user not exist)
+    //check if length is zero or not(zero -> user not exist)
     if(userExist.length == 0){
         res.send("user with that token doesnt exist")
     }else{
         req.user = userExist;
-        next()
+        req.userId = userExist[0].id;
+        next();
     }
-
 }

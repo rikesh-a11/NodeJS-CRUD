@@ -29,6 +29,8 @@
         </div>
         <div class="author-name"><%- blog[0].subTitle  %> </div>
 
+        <img src="<%- blog[0].image  %>" alt="" height="200px" width="200px">
+
         <div class="post-content">
             <p><%- blog[0].description  %></p>
         </div>
@@ -36,6 +38,10 @@
         <div class="post-footer">
             Published on <%- blog[0].createdAt.toISOString().slice(0,10) %>
         </div>
+        <div class="post-footer">
+            <p>Author : <%- blog[0].user.username   %></p>
+        </div>
+        
         <button><a href="/delete/<%-blog[0].id %>">Delete</a></button>
         <button><a href="/edit/<%-blog[0].id %>">Edit</a></button>
     </div>

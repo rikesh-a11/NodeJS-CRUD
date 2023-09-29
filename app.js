@@ -18,12 +18,19 @@ require("./model/index")
 app.set("view engine","ejs")
 
 //nodejs lai file access garna de vaneko 
-app.use(express.static("public"))
+app.use(express.static("public/"))
+app.use(express.static("uploads/"))
 
 app.use(cookieparser())
 //form bata data aairaxa parse or handle gar vaneko
 app.use(express.json())    //remember these 2 line
 app.use(express.urlencoded({extended:true}))
+
+//mathi ko cookie parser vanda tala hunu parxa
+app.use((req,res,next)=>{
+    res.locals.currentUser = req.cookies.token
+    next()
+})
 
 
 app.use("",blogRoute)   //localhost:3000 /createBlog

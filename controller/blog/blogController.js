@@ -1,4 +1,5 @@
-const { blogs } = require("../../model")
+const { blogs, users } = require("../../model")
+
 
 //createlog 
 exports.renderCreateBlog = (req,res)=>{
@@ -6,21 +7,30 @@ exports.renderCreateBlog = (req,res)=>{
 }
 //createBlog post
 exports.CreateBlog = async(req,res)=>{
-    const userId = req.user[0].id
+
+    // console.log(req.file)
+    // const userId = req.user[0].id
     //first approach
     const title = req.body.title 
     const subTitle = req.body.subtitle 
     const description = req.body.description 
+    const fileName = req.file.filename
     //second approach
     // const {title,subTitle,description} =req.body
+
+    if(!title || !description || !subTitle || !req.file){
+        return res.send(
+            "please provide title,subTitle,description,file"
+        )
+    }
 
     //insert in database , takes some time in operation with database so use await keyword
    await blogs.create({
     title:title,
     subTitle:subTitle,
     description: description,
-    userId: userId
-
+    userId: req.userId,
+    image: process.env.PROJECT_URL + fileName
     })
     res.redirect("/")
 }
@@ -30,9 +40,12 @@ exports.allBlogs = async(req,res)=>{
     // console.log(req) 
     
     //table bata data nikalnu parney
-    const allBlogs = await blogs.findAll()
-    console.log("allBlogs")
-
+    const allBlogs = await blogs.findAll({
+        include : {
+            model : users //users table name
+        }
+    })
+   
     res.render("blogs",{blogs:allBlogs})
 }
 
@@ -44,6 +57,9 @@ exports.singleBlog = async (req,res)=>{
    const blog = await blogs.findAll({
         where: {
             id:id,
+        },
+        include : {
+            model : users
         }
     })
     res.render("singleBlog.ejs",{blog:blog})
@@ -92,4 +108,18 @@ exports.EditBlog = async(req,res)=>{
         }
     })
     res.redirect("/single/" + id)
+}
+
+//myBlogs ko lagi
+
+exports.renderMyBlogs = async(req,res)=>{
+    //get this users blogs
+    const userId = req.userId
+    //find blogs of this userId
+    const myBlogs = await blogs.findAll({
+        where : {
+            userId : userId
+        }
+    })
+    res.render("myBlogs.ejs",{myBlogs : myBlogs})
 }

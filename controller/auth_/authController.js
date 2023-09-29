@@ -66,5 +66,12 @@ exports.loginUser = async(req,res)=>{
         }
     }
 
-
 }
+
+
+//logout
+exports.logOut = (req,res)=>{
+    res.clearCookie('token')
+    res.redirect("/login")
+}
+
