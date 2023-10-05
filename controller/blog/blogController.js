@@ -1,4 +1,5 @@
 const { blogs, users } = require("../../model")
+const fs = require("fs")
 
 
 //createlog 
@@ -92,21 +93,44 @@ exports.renderEditBlog = async(req,res)=>{
 
 //post edit blog
 exports.EditBlog = async(req,res)=>{
+    // const userId = req.userId
     const id = req.params.id 
-    console.log(req.body)
+    // console.log(req.body)
     const title = req.body.title
     const subTitle = req.body.subtitle
     const description = req.body.description
+    
+    // const oldData = await blogs.findAll({
+    //     where : {
+    //         id : id
+    //     }
+    // })
+    // if(oldData[0].userId !== userId){
+    //     return res.send("You cannot edit this blog")
+    // }
+
+
+    let fileUrl;
+    if(req.file){
+        fileUrl = process.env.PROJECT_URL + req.file.filename
+    }else{
+        fileUrl = oldData[0].image   //old fileUrl
+    }
+
+
 
     await blogs.update({
         title : title,
         subTitle: subTitle,
-        description: description
+        description: description,
+        image : fileUrl
     },{
         where : {
             id: id
         }
     })
+
+
     res.redirect("/single/" + id)
 }
 

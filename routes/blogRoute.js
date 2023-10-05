@@ -4,6 +4,7 @@ const { isAuthenticated } = require("../middleware/isAuthenticated");
 const router = require("express").Router()
 
 const { multer, storage } = require("../middleware/multerConfig");
+const { isValidUser } = require("../middleware/validUser");
 const upload = multer({ storage: storage });
 
 //createBlog ma gayesi k garni vaneko
@@ -14,7 +15,7 @@ router.route("/createBlog").get(isAuthenticated,renderCreateBlog).post(isAuthent
 router.route("/single/:id").get(isAuthenticated,singleBlog)
 router.route("/delete/:id").get(isAuthenticated,deleteBlog)
 router.route("/edit/:id").get(isAuthenticated,renderEditBlog)
-router.route("/editBlog/:id").post(isAuthenticated,EditBlog)
+router.route("/editBlog/:id").post(isAuthenticated,isValidUser,upload.single('image'),EditBlog)
 router.route("/myBlogs").get(isAuthenticated,renderMyBlogs)
 
 

@@ -16,7 +16,7 @@
 
     <!-- Form Section -->
     <div class="form-container">
-        <form class="form" action="/editBlog/<%- blog[0].id %>" method="post">
+        <form class="form" action="/editBlog/<%- blog[0].id %>" method="post" enctype="multipart/form-data">
             <label for="title">Title:</label>
             <input type="text" id="title" value="<%- blog[0].title %>" name="title" required />
 
@@ -26,9 +26,11 @@
             <label for="description">Description:</label>
             <textarea id="text" name="description" rows="4" required> <%- blog[0].description %> </textarea>
 
+            <label for="image">image:</label>
+            <input type="file" id="image" name="image"  /> <br> <br>
 
             <button type="submit">Submit</button>
-            <button type="submit><a href="/single/<%-blog[0].id %>">Cancel</a></button>
+            <button type="submit><a href="/single/<%- blog[0].id %>">Cancel</a></button>
         </form>
     </div>
     <%-include("components/footer.ejs")  %>
