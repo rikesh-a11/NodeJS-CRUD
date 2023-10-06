@@ -1,6 +1,8 @@
 const { users } = require("../../model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const sendEmail = require("../../services/sendEmail")
+const { options } = require("../../routes/authRoute")
 
 exports.renderRegisterForm = (req,res)=>{
     res.render("register")
@@ -75,3 +77,33 @@ exports.logOut = (req,res)=>{
     res.redirect("/login")
 }
 
+//fogot password 
+exports.forgotPassword = (req,res)=>{
+    res.render("forgotPassword.ejs")
+}
+
+exports.checkForgotPassword = async(req,res)=>{
+
+    const email = req.body.email 
+    if(!email){
+        return res.send("please provide email")
+    }
+    //if email aayoo vane users table check with that email 
+   const emailExists = await users.findAll({
+        where : {
+            email : email
+        }
+    })
+        if(emailExists.length == 0){
+            res.send("User with that email doesn't exist")
+        }else{
+            //tyo email ma OTP pathauney
+           await sendEmail({
+                email:email,
+                subject : "Forgot password OTP",
+                otp : 1234
+            })
+            res.send("Email send successfully")
+        }
+    
+}
