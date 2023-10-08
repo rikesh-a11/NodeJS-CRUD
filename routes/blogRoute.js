@@ -12,7 +12,7 @@ const upload = multer({ storage: storage });
 // app.post('/createBlog',CreateBlog)  
 router.route("/").get(allBlogs)
 router.route("/createBlog").get(isAuthenticated,renderCreateBlog).post(isAuthenticated,upload.single('image'),CreateBlog)
-router.route("/single/:id").get(isAuthenticated,singleBlog)
+router.route("/single/:id").get(singleBlog)
 router.route("/delete/:id").get(isAuthenticated,deleteBlog)
 router.route("/edit/:id").get(isAuthenticated,renderEditBlog)
 router.route("/editBlog/:id").post(isAuthenticated,isValidUser,upload.single('image'),EditBlog)
