@@ -144,11 +144,12 @@ exports.handleOTP = async(req,res)=>{
         const otpGeneratedTime = userData[0].otpGeneratedTime  //past time
         
         if(currentTime - otpGeneratedTime <= 120000 ){
-            userData[0].otp = null
-            userData[0].otpGeneratedTime = null
-            await userData[0].save()
-
-            res.redirect("/passwordChange")
+            // userData[0].otp = null
+            // userData[0].otpGeneratedTime = null
+            // await userData[0].save()
+ 
+        // res.redirect("/passwordChange?email=" + email)
+        res.redirect(`/passwordChange?email=${email}&otp=${otp}`)
         }else{
             res.send("OTP has expired")
         }
@@ -157,5 +158,66 @@ exports.handleOTP = async(req,res)=>{
 
 //change password 
 exports.renderPasswordChangeForm = (req,res)=>{
-    res.render("passwordChangeForm.ejs")
+    const email = req.query.email
+    const otp = req.query.otp
+    const currentTime = Date.now()
+
+    if(!email || !otp){
+        return res.send("Email and otp should be provided in the query")
+    }
+    res.render("passwordChangeForm.ejs",{email,otp})
+}
+
+
+//new password ko lagi
+exports.handlePasswordChange = async(req,res)=>{
+   const email = req.params.email
+   const otp = req.params.otp
+
+   const  newPassword = req.body.newPassword
+   const confirmNewPassword = req.body.confirmNewPassword
+   
+   if(newPassword !== confirmNewPassword || !email ||!otp){
+    return res.send("please provide newPassword , email and confirmNewPassword")
+   }
+
+    //checking whether the otp is of that email or not
+    const userData = await users.findAll({
+        where : {
+            email : email,
+            otp : otp
+        }
+    })
+
+    if(!newPassword || !confirmNewPassword){
+        return res.send("newPassword and confirmPassword doesn't matched")
+    }
+    if(userData.length == 0){
+        res.send("Dont try to do this")
+    }
+    const currentTime = Date.now()
+    const otpGeneratedTime = userData[0].otpGeneratedTime 
+    if(currentTime - otpGeneratedTime >= 120000 ){
+
+      return res.redirect("/forgotPassword")
+    } 
+
+    const hashedNewPassword = bcrypt.hashSync(newPassword,8) 
+
+    //match vayo vane
+    //first approach
+    // const userData = await users.findAll({
+    //     email : email
+    // })
+    // userData[0].password = newPassword
+    // await userData[0].save
+
+    await users.update({
+        password : hashedNewPassword
+    },{
+        where : {
+            email : email
+        }
+    })
+    res.redirect("/login")
 }
