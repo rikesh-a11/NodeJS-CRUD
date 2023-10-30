@@ -5,6 +5,10 @@ const app = express()       //storing it in app, app vanne variable throughout u
 require('dotenv').config()
 const cookieparser = require("cookie-parser")
 
+//require express-session connect-flash
+const session = require("express-session")
+const flash = require("connect-flash")
+
 
 //ROUTES
 const blogRoute = require("./routes/blogRoute")
@@ -13,6 +17,15 @@ const authRoute = require("./routes/authRoute")
  
 //database connection
 require("./model/index")
+
+// node js lai session use gar vaneko
+app.use(session({
+    secret : "helloworld",
+    resave : false,
+    saveUninitialized : false
+}))
+app.use(flash())
+
 
 // ejs use garna lako , kk chainey ho env set gardey
 app.set("view engine","ejs")

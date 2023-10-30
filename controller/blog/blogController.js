@@ -38,6 +38,8 @@ exports.CreateBlog = async(req,res)=>{
 
 // allblogs
 exports.allBlogs = async(req,res)=>{
+    const success = req.flash("success")
+
     // console.log(req) 
     
     //table bata data nikalnu parney
@@ -47,7 +49,7 @@ exports.allBlogs = async(req,res)=>{
         }
     })
    
-    res.render("blogs",{blogs:allBlogs})
+    res.render("blogs",{blogs:allBlogs,success })
 }
 
 //singleBlog

@@ -9,7 +9,8 @@ exports.renderRegisterForm = (req,res)=>{
 }
 
 exports.registerUser = async(req,res)=>{
-    const {email,username,password,confirmPassword} = req.body
+    
+        const {email,username,password,confirmPassword} = req.body
 
     //check password with confrim password
     if(password !== confirmPassword){
@@ -24,13 +25,13 @@ exports.registerUser = async(req,res)=>{
         
     })
     res.redirect("/login")
-
 }
 
-//login starts
+//login starts from here
 
 exports.renderLoginForm = (req,res)=>{
-    res.render("login")
+    const  error = req.flash("error")
+    res.render("login",{error:error})
 }
 
 exports.loginUser = async(req,res)=>{
@@ -51,7 +52,7 @@ exports.loginUser = async(req,res)=>{
         res.send("User Email doesn't exists")
     }else{
         const associatedEmailPassword = associatedDataWithEmail[0].password
-        const isMatched = bcrypt.compareSync(password,associatedEmailPassword)  //trye or false return
+        const isMatched = bcrypt.compareSync(password,associatedEmailPassword)  //true or false return
 
         if(isMatched){
 
@@ -60,16 +61,16 @@ exports.loginUser = async(req,res)=>{
                 expiresIn: '30d'
             })
             res.cookie('token',token)  //browser ma application  tab vitra cookie vanney ma save hunxa
-
-
-            res.send("login Sucess")
+            
+            req.flash("success","Logged in Successfully")
+            res.redirect("/")
         }else{
-        res.send("Invalid password")
+            req.flash("error","Invalid password")
+            res.redirect("/login")
         }
     }
 
 }
-
 
 //logout
 exports.logOut = (req,res)=>{
