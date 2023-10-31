@@ -1,6 +1,9 @@
 const { blogs, users } = require("../../model")
 const fs = require("fs")
 
+const db = require("../../model/index")
+const sequelize = db.sequelize
+const {QueryTypes} = require("sequelize")
 
 //createlog 
 exports.renderCreateBlog = (req,res)=>{
@@ -25,29 +28,49 @@ exports.CreateBlog = async(req,res)=>{
         )
     }
 
-    //insert in database , takes some time in operation with database so use await keyword
-   await blogs.create({
-    title:title,
-    subTitle:subTitle,
-    description: description,
-    userId: req.userId,
-    image: process.env.PROJECT_URL + fileName
+    //query to make seperate blog table for each user
+    await sequelize.query(`CREATE TABLE IF NOT EXISTS blog_${req.userId}(id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,title VARCHAR(255),subTitle VARCHAR(255),description VARCHAR(255),
+    userId INT REFERENCES users(id),image VARCHAR(255))`,{
+        type : QueryTypes.CREATE
     })
+
+    //inserting data
+    await sequelize.query(`INSERT INTO blog_${req.userId}(title,subTitle,description,userId,image) VALUES(?,?,?,?,?)`,{
+        type : QueryTypes.INSERT,
+        replacements : [title,subTitle,description,req.userId,process.env.PROJECT_URL + fileName]
+    })
+
+
+    //insert in database , takes some time in operation with database so use await keyword
+//    await blogs.create({
+//     title:title,
+//     subTitle:subTitle,
+//     description: description,
+//     userId: req.userId,
+//     image: process.env.PROJECT_URL + fileName
+//     })
+
+
+//mathi ko raw queries
+//    await sequelize.query("INSERT INTO blogs(title,subTitle,description,userId,image) VALUES(?,?,?,?,?)",{
+//     replacements : [title,subTitle,description,req.userId,process.env.PROJECT_URL + fileName],
+//     type : QueryTypes.INSERT
+// })
     res.redirect("/")
 }
+
 
 // allblogs
 exports.allBlogs = async(req,res)=>{
     const success = req.flash("success")
-
     // console.log(req) 
-    
     //table bata data nikalnu parney
-    const allBlogs = await blogs.findAll({
-        include : {
-            model : users //users table name
-        }
+    // const allBlogs = await blogs.findAll()
+    const allBlogs = await sequelize.query("SELECT * FROM blogs",{
+        type : sequelize.QueryTypes.SELECT
     })
+
+
    
     res.render("blogs",{blogs:allBlogs,success })
 }
@@ -65,6 +88,16 @@ exports.singleBlog = async (req,res)=>{
             model : users
         }
     })
+
+   //yei kura raw queires maa garna paryo vaney
+//    const blog  = await sequelize.query("SELECT * FROM blogs JOIN users on blogs.id = users.id WHERE blogs.id = ? ",{
+//     replacements : [id],
+//     type : sequelize.QueryTypes.SELECT
+
+//    })
+
+
+
     res.render("singleBlog.ejs",{blog:blog})
 }
 
